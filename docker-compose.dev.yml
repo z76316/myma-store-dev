@@ -1,0 +1,52 @@
+version: "3.6"
+
+services:
+  mariadb:
+    image: mariadb:10.5
+    container_name: myma-store-mariadb
+    hostname: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYMA_STORE_DATABASE_PASSWORD:-yasskin}
+      MYSQL_DATABASE: ${MYMA_STORE_DATABASE:-MYMAStore}
+    ports:
+      - 3306:3306
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: /usr/bin/mysql --user=${MYMA_STORE_DATABASE_USERNAME:-root} --password=${MYMA_STORE_DATABASE_PASSWORD:-yasskin} --execute "SHOW DATABASES;"
+      interval: 3s
+      timeout: 1s
+      retries: 5
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:5
+    container_name: myma-store-phpmyadmin
+    hostname: phpmyadmin
+    restart: always
+    depends_on:
+      - mariadb
+    environment:
+      PMA_HOST: mariadb
+    ports:
+      - 3307:80
+  # store:
+  #   container_name: store
+  #   hostname: store
+  #   user: myma
+  #   links:
+  #     - mariadb
+  #   depends_on:
+  #     - mariadb
+  #   restart: always
+  #   build:
+  #     context: ./
+  #     dockerfile: Dockerfile
+  #     args:
+  #       server_domain: ${REACT_APP_SERVER_DOMAIN:-"http://localhost:8080"}
+  #       environment: development
+  #       synchronize: ${MYMA_STORE_DATABASE_SYNCHRONIZE:-prod}
+  #   env_file:
+  #     - ./server/development.env
+  #   ports:
+  #     - 8080:8080
+  #   volumes:
+  #     - ${MYMA_PRODUCTS_HOST_PATH:-./products}:/myma-store/products:Z

@@ -1,0 +1,10 @@
+enum PermissionName {
+	READ_SELF = "READ_SELF",
+	READ_OTHERS = "READ_OTHERS",
+	UPDATE_SELF = "UPDATE_SELF",
+	UPDATE_OTHERS = "UPDATE_OTHERS",
+	DELETE_SELF = "DELETE_SELF",
+	DELETE_OTHERS = "DELETE_OTHERS"
+}
+
+export default PermissionName;

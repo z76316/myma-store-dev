@@ -1,0 +1,72 @@
+version: "3.6"
+
+services:
+  mariadb:
+    image: mariadb:10
+    # container_name: myma-store-mariadb
+    # hostname: mariadb
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${MYMA_STORE_DATABASE:-MYMAStore}
+      MYSQL_ROOT_PASSWORD: ${MYMA_STORE_DATABASE_PASSWORD}
+    # ports:
+    #   - 3306:3306
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: /usr/bin/mysql --user=root --password=${MYMA_STORE_DATABASE_PASSWORD} --execute "SHOW DATABASES;"
+      interval: 3s
+      timeout: 1s
+      retries: 5
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin:5
+  #   container_name: myma-store-phpmyadmin
+  #   hostname: phpmyadmin
+  #   restart: always
+  #   depends_on:
+  #     - mariadb
+  #   environment:
+  #     PMA_HOST: mariadb
+  #   ports:
+  #     - 3307:80
+  store:
+    # container_name: store
+    # hostname: store
+    user: myma
+    depends_on:
+      - mariadb
+    restart: always
+    # build:
+    #   context: ./
+    #   dockerfile: Dockerfile
+    #   args:
+    #     server_domain: ${REACT_APP_SERVER_DOMAIN:-"https://mymathapps.com"}
+    #     environment: production
+    #     synchronize: ${MYMA_STORE_DATABASE_SYNCHRONIZE:-false}
+    image: "registry.gitlab.com/return0software/myma-team/myma-store:latest"
+    environment:
+      MYMA_STORE_DATABASE_HOST: mariadb
+      MYMA_STORE_DATABASE_PORT: 3306
+      MYMA_STORE_DATABASE: ${MYMA_STORE_DATABASE:-MYMAStore}
+      MYMA_STORE_DATABASE_USERNAME: root
+      MYMA_STORE_DATABASE_PASSWORD: ${MYMA_STORE_DATABASE_PASSWORD}
+      MYMA_JWT_SECRET: ${MYMA_JWT_SECRET}
+      MYMA_STATIC_SITE_PATH: ${MYMA_STATIC_SITE_PATH:-/myma-store/client/public}
+      MYMA_PRODUCTS_PATH: ${MYMA_PRODUCTS_PATH:-/myma-store/products}
+      MYMA_CONTENT_ROOT_ROUTE: ${MYMA_CONTENT_ROOT_ROUTE:-/content/MYMACalculus}
+      MAILGUN_SERVER: ${MAILGUN_SERVER:-smtp.mailgun.org}
+      MAILGUN_PORT: ${MAILGUN_PORT:-465}
+      MAILGUN_USERNAME: ${MAILGUN_USERNAME}
+      MAILGUN_PASSWORD: ${MAILGUN_PASSWORD}
+      TYPEORM_HOST: mariadb
+      TYPEORM_PORT: 3306
+      TYPEORM_DATABASE: ${MYMA_STORE_DATABASE:-MYMAStore}
+      TYPEORM_USERNAME: root
+      TYPEORM_PASSWORD: ${MYMA_STORE_DATABASE_PASSWORD}
+      GOOGLE_OAUTH_CLIENT_ID: "aoeuaoeuaoeu"
+      GOOGLE_OAUTH_CLIENT_SECRET: "aoeuaoeuaoeu"
+      GOOGLE_OAUTH_CALLBACK: "https://dev.mymathapps.com/callback"
+
+    ports:
+      - 8080:8080
+    volumes:
+      - ${MYMA_PRODUCTS_HOST_PATH:-./products}:/myma-store/products:Z

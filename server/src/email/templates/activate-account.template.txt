@@ -1,0 +1,16 @@
+Hi {{name}},
+
+Welcome to MYMathApps! We hope you will find our array of products
+useful in your pursuit of knowledge.
+
+Click the link below to activate your account and get started.
+
+{{storeDomain}}{{activateAccountRoute}}?activationCode={{activationCode}}
+
+This email was sent from an account that is not monitored. Replies
+will not be read. If you have other questions or concerns, head over to
+{{storeDomain}}{{contactRoute}}?email={{email}}.
+
+Thanks for your support of MYMathApps,
+
+The MYMathApps Team

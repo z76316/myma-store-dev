@@ -1,0 +1,19 @@
+# Docker stuff
+*.log
+*.env
+build
+dist
+docker
+
+# Node & Yarn
+node_modules
+
+# Dependencies
+products
+
+# Misc
+.DS_Store
+.vscode
+
+# Archive
+old-client
