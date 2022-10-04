@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "heroku-prebuild": "cd client && yarn && yarn build",
+    "heroku-prebuild": "cd client && yarn build",
     "start": "cd client && yarn start"
   }
 }
