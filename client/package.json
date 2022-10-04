@@ -11,6 +11,11 @@
 		"lint": "eslint 'src/**/*.ts' && prettier --config ../.prettierrc.yml --list-different 'src/**/*.ts'",
 		"lint:fix": "eslint --fix 'src/**/*.ts' && prettier --config ../.prettierrc.yml --write 'src/**/*.ts'"
   },
+  "engines": {
+    "node": "16.17.1",
+    "npm": "8.15.0",
+    "yarn": "1.7.0"
+  },
   "browserslist": {
     "production": [
       ">0.2%",
