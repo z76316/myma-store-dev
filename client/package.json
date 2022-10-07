@@ -1,7 +1,7 @@
 {
 	"name": "client",
 	"version": "0.1.0",
-	"private": true,
+	"private": false,
 	"proxy": "https://myma-store.herokuapp.com",
 	"scripts": {
 		"start": "react-scripts start",
