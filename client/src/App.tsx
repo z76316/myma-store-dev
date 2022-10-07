@@ -10,6 +10,7 @@ import Contact from "./pages/Contact";
 import MYMACalc1 from "./pages/MYMACalc1";
 import MYMACalc3 from "./pages/MYMACalc3";
 import MYMACalc2 from "./pages/MYMACalc2";
+import FinancePreview from "./pages/FinancePreview";
 import Checkout from "./pages/Checkout";
 import Products from "./pages/Products";
 import User from "./entities/user";
@@ -82,6 +83,9 @@ const App: React.FC = (): JSX.Element => {
 								</Route>
 								<Route exact path="/products/MYMACalc3">
 									<MYMACalc3 />
+								</Route>
+								<Route exact path="/products/finance-with-maple">
+									<FinancePreview />
 								</Route>
 								<Route exact path="/checkout">
 									<Checkout />
