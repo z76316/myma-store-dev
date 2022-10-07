@@ -2,7 +2,7 @@
 	"name": "client",
 	"version": "0.1.0",
 	"private": true,
-	"proxy": "https://dev.mymathapps.com",
+	"proxy": "https://myma-store.herokuapp.com",
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build",
