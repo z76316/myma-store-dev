@@ -7,7 +7,7 @@
   "scripts": {
     "heroku-prebuild": "cd ./client && yarn install && yarn build",
     "start": "cd ./client && yarn start",
-    "heroku-postbuild": "cd ../server && yarn && yarn start"
+    "heroku-postbuild": "cd ./server && yarn && yarn start"
   },
   "engines": {
     "node": "16.17.1",
