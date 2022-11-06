@@ -51,7 +51,7 @@ export default class LocalStrategy extends PassportStrategy(
 		}
 
 		const user = await this.authenticationService.validateUser(email, hashedPassword);
-		if (user === undefined) {
+		if (user === null) {
 			done(new UnauthorizedException("Incorrect password was supplied"), undefined);
 		}
 

@@ -1,10 +1,14 @@
-import { Repository, EntityRepository } from "typeorm";
-import { Logger } from "@nestjs/common";
+import { DataSource, EntityManager, Repository } from "typeorm";
+import { Injectable, Logger } from "@nestjs/common";
 import { Product } from "./product.entity";
 
-@EntityRepository(Product)
+@Injectable()
 export default class ProductRepository extends Repository<Product> {
 	private static readonly logger = new Logger(ProductRepository.name);
+
+	constructor(entityManager: EntityManager) {
+		super(Product, entityManager);
+	}
 
 	public async findAll(): Promise<Product[]> {
 		return this.createQueryBuilder("product")

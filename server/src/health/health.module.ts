@@ -8,7 +8,7 @@ import HealthService from "./health.service";
 
 @Module({
 	controllers: [HealthController],
-	imports: [TypeOrmModule.forRoot(), TerminusModule, EmailModule, ServerConfigModule],
+	imports: [TypeOrmModule, TerminusModule, EmailModule, ServerConfigModule],
 	providers: [HealthService]
 })
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class

@@ -51,8 +51,8 @@ export default class UserController {
 	@UseGuards(AuthGuard(AuthenticationProvider.JWT), RoleGuard)
 	@UseInterceptors(ClassSerializerInterceptor)
 	public async getUser(@Param("id") id: number): Promise<User> {
-		const user = await this.userRepository.findOne(id);
-		if (user === undefined) {
+		const user = await this.userRepository.findOne({ where: { id: id }});
+		if (user === null) {
 			throw new NotFoundException(`User of ID ${id} does not exist`);
 		}
 
@@ -81,8 +81,8 @@ export default class UserController {
 		@Param("id") id: number,
 		@Body() updateUserDto: UpdateUserDto
 	): Promise<void> {
-		const user = await this.userRepository.findOne(id);
-		if (user === undefined) {
+		const user = await this.userRepository.findOne({ where: { id: id }});
+		if (user === null) {
 			throw new NotFoundException(`User of ID ${id} does not exist`);
 		}
 

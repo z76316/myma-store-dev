@@ -7,8 +7,8 @@ import CompanyService from "./company.service";
 @Module({
 	imports: [TypeOrmModule.forFeature([CompanyRepository])],
 	controllers: [CompanyController],
-	providers: [CompanyService],
-	exports: [CompanyService]
+	providers: [CompanyService, CompanyRepository],
+	exports: [CompanyService, CompanyRepository]
 })
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export default class CompanyModule {}

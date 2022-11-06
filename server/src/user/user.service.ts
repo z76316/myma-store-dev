@@ -17,10 +17,10 @@ export default class UserService {
 		private readonly roleRepository: RoleRepository
 	) {}
 
-	public async activateAccount(activationCode: string): Promise<User | undefined> {
+	public async activateAccount(activationCode: string): Promise<User | null> {
 		const user = await this.userRepository.findOne({ where: { activationCode } });
-		if (user === undefined) {
-			return undefined;
+		if (user === null) {
+			return null;
 		}
 
 		user.activatedAccount = true;
@@ -60,8 +60,8 @@ export default class UserService {
 		temporaryPassword: string,
 		hashedPassword: string
 	): Promise<void> {
-		const user = await this.userRepository.findOne({ email, temporaryPassword });
-		if (user === undefined) {
+		const user = await this.userRepository.findOne({ where: { email, temporaryPassword }});
+		if (user === null) {
 			UserService.logger.debug("No user found");
 			throw new EntryNotFoundError();
 		}

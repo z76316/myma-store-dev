@@ -1,5 +1,5 @@
-import { EntityRepository, Repository } from "typeorm";
-import { Logger, OnModuleInit } from "@nestjs/common";
+import { EntityManager, Repository } from "typeorm";
+import { Injectable, Logger, OnModuleInit } from "@nestjs/common";
 import { Permission } from "./permission.entity";
 import PermissionName from "./permission-name";
 
@@ -7,10 +7,14 @@ type PermissionCache = {
 	[r in PermissionName]?: Permission;
 };
 
-@EntityRepository(Permission)
+@Injectable()
 export default class PermissionRepository extends Repository<Permission> implements OnModuleInit {
 	private static readonly logger = new Logger(PermissionRepository.name);
 	private static permissionCache: PermissionCache;
+
+	constructor(entityManager: EntityManager) {
+		super(Permission, entityManager);
+	}
 
 	public onModuleInit(): void {
 		this.invalidatePermissionCache();

@@ -19,11 +19,11 @@ export default class JwtStrategy extends PassportStrategy(Strategy, Authenticati
 	}
 
 	public async validate(payload: JwtPayload, done: VerifiedCallback): Promise<void> {
-		const user = await this.userRepository.findOne(payload.sub);
-		if (user === undefined) {
+		const user = await this.userRepository.findOne({ where: { id: payload.sub }});
+		if (user === null) {
 			done(new UnauthorizedException());
+		} else {
+			done(null, user);
 		}
-
-		done(null, user);
 	}
 }
