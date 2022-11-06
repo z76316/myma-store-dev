@@ -5,8 +5,8 @@
     "react-google-login": "^5.2.2"
   },
   "scripts": {
-    "heroku-prebuild": "cd ./client && yarn install && yarn build && ../server && yarn && yarn start",
-    "start": "cd ../client && yarn start"
+    "heroku-prebuild": "cd ./client && yarn install && yarn build",
+    "start": "cd ./client && yarn start"
   },
   "engines": {
     "node": "16.17.1",
