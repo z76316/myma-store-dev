@@ -19,10 +19,10 @@ export default class AuthenticationService {
 		} as JwtPayload);
 	}
 
-	public validateUser(email: string, hashedPassword: string): Promise<User | undefined> {
+	public validateUser(email: string, hashedPassword: string): Promise<User | null> {
 		return this.userRepository.findOne({
 			where: { email, hashedPassword },
-			relations: ["roles"]
+			relations: { roles: true }
 		});
 	}
 }

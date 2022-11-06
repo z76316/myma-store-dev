@@ -1,8 +1,8 @@
-import { Logger } from "@nestjs/common";
-import { Repository, EntityRepository } from "typeorm";
+import { Logger, Injectable } from "@nestjs/common";
+import { EntityManager, Repository } from "typeorm";
 import { User } from "./user.entity";
 
-@EntityRepository(User)
+@Injectable()
 export default class UserRepository extends Repository<User> {
 	private static readonly logger = new Logger(UserRepository.name);
 	// TODO: fking kill me user.admin
@@ -19,6 +19,10 @@ export default class UserRepository extends Repository<User> {
 				OR user.admin IS TRUE
 			)
 	`;
+
+	constructor(entityManager: EntityManager) {
+		super(User, entityManager);
+	}
 
 	public async validUserSubscriptionForProduct(
 		userId: number,

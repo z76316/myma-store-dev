@@ -1,13 +1,13 @@
 {
 	"name": "client",
 	"version": "0.1.0",
-	"private": false,
-	"proxy": "https://myma-store.herokuapp.com",
+	"private": true,
+	"proxy": "https://dev.mymathapps.com",
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
-		"cucumber-test": "node_modules/.bin/cucumber-js -f @cucumber/pretty-formatter ./src/test/features/financePage.feature",
+		"cucumber-test": "node_modules/.bin/cucumber-js -f @cucumber/pretty-formatter ./src/test/features/googleLogin.feature",
 		"eject": "react-scripts eject",
 		"lint": "eslint 'src/**/*.ts' && prettier --config ../.prettierrc.yml --list-different 'src/**/*.ts'",
 		"lint:fix": "eslint --fix 'src/**/*.ts' && prettier --config ../.prettierrc.yml --write 'src/**/*.ts'"
@@ -32,10 +32,11 @@
 		"@types/node": "^16.11.17",
 		"@types/react": "^17.0.38",
 		"@types/react-dom": "^17.0.11",
+		"gapi-script": "^1.2.0",
 		"react": "^17.0.2",
 		"react-dom": "^17.0.2",
+		"react-google-login": "^5.2.2",
 		"react-scripts": "5.0.0",
-		"selenium-webdriver": "^4.5.0",
 		"typescript": "^4.5.4",
 		"web-vitals": "^2.1.2"
 	},

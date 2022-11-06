@@ -1,10 +1,14 @@
-import { Logger } from "@nestjs/common";
-import { Repository, EntityRepository } from "typeorm";
+import { Logger, Injectable } from "@nestjs/common";
+import { Repository, EntityManager } from "typeorm";
 import { Transaction } from "./transaction.entity";
 
-@EntityRepository(Transaction)
+@Injectable()
 export default class TransactionRepository extends Repository<Transaction> {
 	private static readonly logger = new Logger(TransactionRepository.name);
+
+	constructor(entityManager: EntityManager) {
+		super(Transaction, entityManager);
+	}
 
 	public async findByUserId(userId: number): Promise<Transaction[]> {
 		const transactions = this.createQueryBuilder("transaction")

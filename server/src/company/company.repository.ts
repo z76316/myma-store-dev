@@ -1,8 +1,12 @@
-import { EntityRepository, Repository } from "typeorm";
-import { Logger } from "@nestjs/common";
+import { EntityManager, Repository } from "typeorm";
+import { Injectable, Logger } from "@nestjs/common";
 import { Company } from "./company.entity";
 
-@EntityRepository(Company)
+@Injectable()
 export default class CompanyRepository extends Repository<Company> {
 	private static readonly logger = new Logger(CompanyRepository.name);
+
+	constructor(entityManager: EntityManager) {
+		super(Company, entityManager);
+	}
 }

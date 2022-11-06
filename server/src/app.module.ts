@@ -27,13 +27,10 @@ import MYMAConfigService from "./server-config/myma-config.service";
 import ServeStaticConfigService from "./server-config/serve-static-config.service";
 import AllExceptionFilter from "./meta/filters/all-exception.filter";
 import HealthModule from "./health/health.module";
+import TypeOrmConfigService from "./server-config/typeorm-config.service";
 
 @Module({
 	imports: [
-		TypeOrmModule.forRootAsync({
-			//eslint-disable-next-line global-require, @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
-			useFactory: () => require("../ormconfig")
-		}),
 		ConfigModule.forRoot({
 			envFilePath: [
 				`${process.env.NODE_ENV}.env`,
@@ -94,6 +91,12 @@ import HealthModule from "./health/health.module";
 				MAILGUN_USERNAME: Joi.string().description("The mailgun account username"),
 				MAILGUN_PASSWORD: Joi.string().description("The mailgun account password")
 			})
+		}),
+		// eslint-disable-next-line @typescript-eslint/no-var-requires
+		TypeOrmModule.forRootAsync({
+			name: "default",
+			imports: [ServerConfigModule],
+			useClass: TypeOrmConfigService
 		}),
 		CacheModule.register(),
 		NestEmitterModule.forRoot(new EventEmitter()),
