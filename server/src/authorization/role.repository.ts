@@ -1,4 +1,4 @@
-import { EntityRepository, Repository, EntityManager, EntityMetadata } from "typeorm";
+import { Repository, EntityManager } from "typeorm";
 import { Logger, OnModuleInit, Injectable } from "@nestjs/common";
 import { Role } from "./role.entity";
 import RoleName from "./role-name";
@@ -7,10 +7,14 @@ type RoleCache = {
 	[r in RoleName]?: Role;
 };
 
-@EntityRepository(Role)
+@Injectable()
 export default class RoleRepository extends Repository<Role> implements OnModuleInit {
 	private static readonly logger = new Logger(RoleRepository.name);
 	private static roleCache: RoleCache | undefined;
+
+	constructor(entityManager: EntityManager) {
+		super(Role, entityManager);
+	}
 
 	public onModuleInit(): void {
 		this.invalidateRoleCache();

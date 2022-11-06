@@ -62,15 +62,16 @@ export default class AuthenticationController {
 
 	@Get("google/callback")
 	@UseGuards(AuthGuard(AuthenticationProvider.GOOGLE))
-	@Redirect(undefined, 302)
+	@Redirect("http://localhost:3000", 302)
 	@SetCookies()
 	public async googleLoginCallback(
 		@Req() req: IncomingMessage & Request
 	): Promise<{ url: string }> {
+		console.log("lol1");
 		const user = req.user as User;
 		if (!user.activatedAccount) {
 			await this.emailService.activateAccount(user);
-
+			console.log("lol2");
 			return {
 				url: `${this.mymaConfigService.mymaStoreDomain}${this.mymaConfigService.mymaActivateAccountRoute}`
 			};
@@ -207,7 +208,7 @@ export default class AuthenticationController {
 	@Get("activate")
 	public async activate(@Query("activationCode") activationCode: string): Promise<void> {
 		const user = await this.userService.activateAccount(activationCode);
-		if (user === undefined) {
+		if (user === null) {
 			throw new NotFoundException("The provided activation code is not correct");
 		}
 	}

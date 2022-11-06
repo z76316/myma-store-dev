@@ -1,19 +1,17 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { ConfigModule } from "@nestjs/config";
-import SubscriptionRepository from "../subscription/subscription.repository";
 import TransactionController from "./transaction.controller";
 import TransactionService from "./transaction.service";
 import TransactionRepository from "./transaction.repository";
+import { Subscription } from "../subscription/subscription.entity";
+import { Transaction } from "./transaction.entity";
+import SubscriptionModule from "../subscription/subscription.module";
 
 @Module({
-	imports: [
-		TypeOrmModule.forFeature([TransactionRepository, SubscriptionRepository]),
-		ConfigModule
-	],
+	imports: [TypeOrmModule.forFeature([Transaction, Subscription]), SubscriptionModule],
 	controllers: [TransactionController],
-	providers: [TransactionService],
-	exports: [TransactionService]
+	providers: [TransactionService, TransactionRepository],
+	exports: [TransactionService, TransactionRepository]
 })
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export default class TransactionModule {}

@@ -14,8 +14,8 @@ run `docker-compose -f docker-compose.dev.yml up -d mariadb phpmyadmin`.
 Both the client and the server have `yarn` scripts to `build` the compiled code,
 or to run them with their `start` commands`*`.
 
-`*` - The client is served by the server, so any time you need to make a change to
-the client, just rebuild it and refresh your browser. You can in theory start
+`*` - The client is served by the server, so any time you need to make a change
+to the client, just rebuild it and refresh your browser. You can in theory start
 the client with `yarn start`, but requests won't be proxied correctly.
 Proxying will be setup at some point. Sorry for the inconvenience.
 
@@ -47,7 +47,7 @@ to make sure you use proper practices example alphabetically ordered imports,
 avoided unused variables etc.  `prettier` checks to see if you've properly
 formatted your files - indentation, long lines etc.  Once you've made a commit,
 say on branch `feature-xyz` and pushed to gitlab, you should head over to
-(https://gitlab.com/return0software/myma-team/myma-store/-/commits/feature-xyz)[https://gitlab.com/return0software/myma-team/myma-store/-/commits/feature-xyz]
+[https://gitlab.com/return0software/myma-team/myma-store/-/commits/feature-xyz](https://gitlab.com/return0software/myma-team/myma-store/-/commits/feature-xyz)
 and check if your changes pass the formatting and best practices tests. A green
 arrow will appear next to your commit if it does (note that it might take a few
 minutes for the checks to take place).
@@ -213,29 +213,33 @@ points to the build of the book on the host system. Refer to the compose file
 for usage.
 
 ```sh
-docker run mariadb:10 -v ./docker/mariadb:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=MYMAStore
+docker run mariadb:10 -v ./docker/mariadb:/var/lib/mysql -e \
+    MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=MYMAStore
 docker build . -t myma-store:latest --build-arg evironment=production
 docker run myma-store:latest -v /path/to/book:/myma-store/products
 ```
+
 ## Deploying to <https://dev.mymathapps.com>
 
-When the code on the `master` branch is stable and ready to be deployed to <https://dev.mymathapps.com>, the site can be deployed by pushing the `deploy` branch to the server where the site is hosted.
+When the code on the `master` branch is stable and ready to be deployed to
+<https://dev.mymathapps.com>, the site can be deployed by pushing the `deploy`
+branch to the server where the site is hosted.
 
-1.  Ensure that you have the `deploy` remote set up (only needs to be done once)
+1. Ensure that you have the `deploy` remote set up (only needs to be done once)
 
-    ```sh
-    git remote add deploy myma-gitlab@mymathapps.com:repo
-    ```
+```sh
+git remote add deploy myma-gitlab@mymathapps.com:repo
+```
 
-2.  Merge the changes to be released into the `deploy` branch
+2. Merge the changes to be released into the `deploy` branch
 
-    ```sh
-    git checkout deploy
-    git merge master
-    ```
+```sh
+git checkout deploy
+git merge master
+```
 
-3.  Push the `deploy` branch to the `deploy` remote
+3. Push the `deploy` branch to the `deploy` remote
 
-    ```sh
-    git push deploy deploy
-    ```
+```sh
+git push deploy deploy
+```

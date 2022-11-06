@@ -53,7 +53,6 @@ export default class EmailService implements OnModuleDestroy {
 
 			const port = this.mymaConfigService.mailgunPort;
 			const mailgunUsername = this.mymaConfigService.mailgunUsername;
-			console.log(mailgunUsername);
 			this.from = `MYMathApps <${mailgunUsername}>`;
 			this.transporter = createTransport({
 				host: this.mymaConfigService.mailgunServer,

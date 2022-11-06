@@ -14,7 +14,7 @@ export default class LoggerMiddleware
 		res: ServerResponse & Response,
 		next: NextFunction
 	): void {
-		LoggerMiddleware.logger.debug(`Incoming request: ${req.baseUrl}`);
+		LoggerMiddleware.logger.debug(`Incoming request: ${req.method} ${req.baseUrl}`);
 		next();
 	}
 }

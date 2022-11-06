@@ -31,10 +31,7 @@ import ProductRepository from "./product.repository";
 @ApiTags("products")
 @Controller("api/products")
 export default class ProductController {
-	public constructor(
-		private readonly productRepository: ProductRepository,
-		private readonly mymaConfigService: MYMAConfigService
-	) {}
+	public constructor(private readonly productRepository: ProductRepository) {}
 
 	@Post()
 	@ApiCreatedResponse({ type: Product, description: "Successfully created a product" })
@@ -58,10 +55,13 @@ export default class ProductController {
 	@ApiOkResponse({ type: Product, description: "Successfully retrieved" })
 	@ApiNotFoundResponse({ description: "No product with that code name exists" })
 	public async getProduct(@Param("codeName") codeName: string): Promise<Product> {
-		const product = await this.productRepository.findOne(
-			{ codeName },
-			{ relations: ["subscriptions", "company"] }
-		);
+		const product = await this.productRepository.findOne({
+			where: { codeName: codeName },
+			relations: {
+				subscriptions: true,
+				company: true
+			}
+		});
 
 		if (product === undefined) {
 			throw new NotFoundException();
